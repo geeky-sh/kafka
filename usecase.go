@@ -58,9 +58,8 @@ func (r *Broker) Publish(topic string, message string) error {
 	return nil
 }
 
-func (r *Broker) AddConsumer(topic string, fn func(msg string)) (string, error) {
-	ch := make(chan string, 10)
-	c := Consumer{name: uuid.NewString(), offset: 0, workCh: ch, handler: fn}
+func (r *Broker) AddConsumer(topic string) (string, error) {
+	c := Consumer{name: uuid.NewString(), offset: 0}
 	found := false
 	for i, t := range r.topics {
 		if t.name == topic {

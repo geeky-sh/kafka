@@ -68,7 +68,7 @@ func TestBroker(t *testing.T) {
 	}
 
 	// test adding consumer
-	cname, err := b.AddConsumer("t2", func(msg string) { fmt.Printf("Consumer t2 got the message %s", msg) })
+	cname, err := b.AddConsumer("t2")
 	if err != nil {
 		log.Fatalf("Err %v", err)
 	}
