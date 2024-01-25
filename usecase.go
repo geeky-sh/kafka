@@ -2,7 +2,9 @@ package flipkart
 
 import (
 	"errors"
+	"fmt"
 	"sync"
+	"time"
 
 	"github.com/google/uuid"
 )
@@ -101,6 +103,39 @@ func (r *Broker) NextMessage(cName string) (string, bool, error) {
 	con.offset += 1
 
 	return msg, con.offset < len(r.topics[topicKey].messages), nil
+}
+
+func (r *Broker) BlockingConsume(cName string) {
+	t := time.NewTicker(500 * time.Millisecond)
+	for {
+		select {
+		case <-t.C:
+			tp := &Topic{}
+			co := &Consumer{}
+			found := false
+			for i, t := range r.topics {
+				for j, c := range t.consumers {
+					if c.name == cName {
+						found = true
+						tp = &r.topics[i]
+						co = &r.topics[i].consumers[j]
+					}
+				}
+			}
+			if !found {
+				break
+			}
+			if co.offset < len(tp.messages) {
+				msg := tp.messages[co.offset]
+
+				mu.Lock()
+
+				co.offset += 1
+				mu.Unlock()
+				fmt.Printf("Msg received: %s", msg)
+			}
+		}
+	}
 }
 
 func (r *Broker) SetOffset(cName string, val int) error {

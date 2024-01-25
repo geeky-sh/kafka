@@ -124,4 +124,5 @@ func TestBroker(t *testing.T) {
 		t.Error("Should have more messages", got, want)
 	}
 
+	// b.BlockingConsume(cname) // run this if you want to simulation blocking call which will consume all the items
 }

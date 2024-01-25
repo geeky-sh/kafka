@@ -21,6 +21,7 @@ type BrokerInterface interface {
 	Publish(topic string, message string) error
 	AddConsumer(topic string) (string, error)
 	NextMessage(string) (string, bool, error)
+	BlockingConsume(cName string)
 	SetOffset(cName string, val int) error
 	GetOffset(cName string) (int, error)
 
