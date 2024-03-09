@@ -1,3 +1,5 @@
+My attempt at implementing Kafka functionalities using Golang
+
 ### Functional Requirements:
 - Create Topic
 - Delete Topic
@@ -21,3 +23,7 @@
 - Max retention period
 - fix casing
 - test for error scenarios
+
+
+## How to test
+`go test`

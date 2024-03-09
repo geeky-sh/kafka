@@ -1,4 +1,4 @@
-package flipkart
+package kafka
 
 import (
 	"fmt"

@@ -1,4 +1,4 @@
-package flipkart
+package kafka
 
 type Broker struct {
 	topics []Topic
